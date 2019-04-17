@@ -1,6 +1,12 @@
 package io.github.jhipster.application.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+
 public class Project {
+
+    @Id
+    private String id;
 
     private String name;
 
@@ -11,6 +17,9 @@ public class Project {
     private String status;
 
     private Team team;
+
+    @Transient
+    private String period;
 
     public String getName() {
         return name;
@@ -50,5 +59,21 @@ public class Project {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

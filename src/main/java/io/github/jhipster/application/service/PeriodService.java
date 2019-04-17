@@ -31,17 +31,12 @@ public class PeriodService {
         time = time.plus(4, ChronoUnit.MONTHS);
 
         period.setEndDate(time.atZone(ZoneOffset.ofHours(0)).toInstant());
-        
+
         return periodRepository.save(period);
     }
 
     public Period update (Period period) throws Exception {
-        Optional<Period> periodOptional = periodRepository.findById(period.getId());
-
-        if(!periodOptional.isPresent())
-            throw new Exception("No existe el periodo");
-
-        Period periodDb = periodOptional.get();
+        Period periodDb = getPeriodById(period.getId());
 
         period.setName(period.getName() == null ? periodDb.getName() : period.getName());
         period.setEndDate(period.getEndDate() == null ? periodDb.getEndDate() : period.getEndDate());
@@ -56,15 +51,19 @@ public class PeriodService {
     }
 
     public boolean delete(Period period) throws Exception {
-        Optional<Period> periodOptional = periodRepository.findById(period.getId());
-
-        if(!periodOptional.isPresent())
-            throw new Exception("No existe el periodo");
-
-        Period periodDb = periodOptional.get();
+        Period periodDb = getPeriodById(period.getId());
 
         periodRepository.delete(periodDb);
 
         return true;
+    }
+
+    public Period getPeriodById(String id) throws Exception {
+        Optional<Period> periodOptional = periodRepository.findById(id);
+
+        if (!periodOptional.isPresent())
+            throw new Exception("El periodo no existe");
+
+        return periodOptional.get();
     }
 }
