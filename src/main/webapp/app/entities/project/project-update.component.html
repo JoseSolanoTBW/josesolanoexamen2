@@ -30,6 +30,13 @@
                         [(ngModel)]="project.status" />
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" for="field_period">Period</label>
+                    <select class="form-control" id="field_period" name="period" [(ngModel)]="project.period" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="periodOption.id === project.period?.id ? project.period : periodOption" *ngFor="let periodOption of periods; trackBy: trackPeriodById">{{periodOption.name}}</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

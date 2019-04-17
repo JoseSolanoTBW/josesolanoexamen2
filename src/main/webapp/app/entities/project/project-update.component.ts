@@ -3,8 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { JhiAlertService } from 'ng-jhipster';
 import { IProject } from 'app/shared/model/project.model';
 import { ProjectService } from './project.service';
+import { IPeriod } from 'app/shared/model/period.model';
+import { PeriodService } from 'app/entities/period';
 
 @Component({
     selector: 'jhi-project-update',
@@ -14,13 +17,27 @@ export class ProjectUpdateComponent implements OnInit {
     project: IProject;
     isSaving: boolean;
 
-    constructor(protected projectService: ProjectService, protected activatedRoute: ActivatedRoute) {}
+    periods: IPeriod[];
+
+    constructor(
+        protected jhiAlertService: JhiAlertService,
+        protected projectService: ProjectService,
+        protected periodService: PeriodService,
+        protected activatedRoute: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ project }) => {
             this.project = project;
         });
+        this.periodService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IPeriod[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IPeriod[]>) => response.body)
+            )
+            .subscribe((res: IPeriod[]) => (this.periods = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -47,5 +64,13 @@ export class ProjectUpdateComponent implements OnInit {
 
     protected onSaveError() {
         this.isSaving = false;
+    }
+
+    protected onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    trackPeriodById(index: number, item: IPeriod) {
+        return item.id;
     }
 }

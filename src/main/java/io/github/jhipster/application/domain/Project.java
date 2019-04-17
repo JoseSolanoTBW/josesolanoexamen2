@@ -2,6 +2,7 @@ package io.github.jhipster.application.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -38,6 +39,11 @@ public class Project implements Serializable {
     @DBRef
     @Field("team")
     private Set<Team> teams = new HashSet<>();
+    @DBRef
+    @Field("period")
+    @JsonIgnoreProperties("projects")
+    private Period period;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
         return id;
@@ -122,6 +128,19 @@ public class Project implements Serializable {
 
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
+    }
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public Project period(Period period) {
+        this.period = period;
+        return this;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

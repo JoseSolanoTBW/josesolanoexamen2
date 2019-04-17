@@ -1,4 +1,5 @@
 import { ITeam } from 'app/shared/model/team.model';
+import { IPeriod } from 'app/shared/model/period.model';
 
 export interface IProject {
     id?: string;
@@ -7,6 +8,7 @@ export interface IProject {
     schedule?: string;
     status?: string;
     teams?: ITeam[];
+    period?: IPeriod;
 }
 
 export class Project implements IProject {
@@ -16,6 +18,7 @@ export class Project implements IProject {
         public numStudent?: number,
         public schedule?: string,
         public status?: string,
-        public teams?: ITeam[]
+        public teams?: ITeam[],
+        public period?: IPeriod
     ) {}
 }

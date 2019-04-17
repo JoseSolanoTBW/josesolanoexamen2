@@ -6,7 +6,16 @@
             "relationshipName": "team",
             "otherEntityName": "team",
             "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "project"
+            "otherEntityRelationshipName": "project",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "period",
+            "otherEntityName": "period",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "project",
+            "otherEntityRelationshipNameUndefined": true
         }
     ],
     "fields": [

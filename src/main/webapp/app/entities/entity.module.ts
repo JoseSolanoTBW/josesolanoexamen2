@@ -43,6 +43,14 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'team',
                 loadChildren: './team/team.module#Examen2TeamModule'
+            },
+            {
+                path: 'period',
+                loadChildren: './period/period.module#Examen2PeriodModule'
+            },
+            {
+                path: 'project',
+                loadChildren: './project/project.module#Examen2ProjectModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])
