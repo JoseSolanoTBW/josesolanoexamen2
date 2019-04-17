@@ -5,8 +5,11 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { JhiAlertService } from 'ng-jhipster';
 import { IReview } from 'app/shared/model/review.model';
 import { ReviewService } from './review.service';
+import { IStory } from 'app/shared/model/story.model';
+import { StoryService } from 'app/entities/story';
 
 @Component({
     selector: 'jhi-review-update',
@@ -15,9 +18,16 @@ import { ReviewService } from './review.service';
 export class ReviewUpdateComponent implements OnInit {
     review: IReview;
     isSaving: boolean;
+
+    stories: IStory[];
     timestamp: string;
 
-    constructor(protected reviewService: ReviewService, protected activatedRoute: ActivatedRoute) {}
+    constructor(
+        protected jhiAlertService: JhiAlertService,
+        protected reviewService: ReviewService,
+        protected storyService: StoryService,
+        protected activatedRoute: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
@@ -25,6 +35,13 @@ export class ReviewUpdateComponent implements OnInit {
             this.review = review;
             this.timestamp = this.review.timestamp != null ? this.review.timestamp.format(DATE_TIME_FORMAT) : null;
         });
+        this.storyService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IStory[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IStory[]>) => response.body)
+            )
+            .subscribe((res: IStory[]) => (this.stories = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -52,5 +69,13 @@ export class ReviewUpdateComponent implements OnInit {
 
     protected onSaveError() {
         this.isSaving = false;
+    }
+
+    protected onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    trackStoryById(index: number, item: IStory) {
+        return item.id;
     }
 }

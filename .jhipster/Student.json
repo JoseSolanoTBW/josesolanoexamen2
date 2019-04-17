@@ -8,7 +8,16 @@
             "relationshipType": "many-to-many",
             "otherEntityField": "code",
             "ownerSide": true,
-            "otherEntityRelationshipName": "student"
+            "otherEntityRelationshipName": "student",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "team",
+            "otherEntityName": "team",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "student",
+            "otherEntityRelationshipNameUndefined": true
         }
     ],
     "fields": [

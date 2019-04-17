@@ -1,41 +1,37 @@
 package io.github.jhipster.application.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
- * A Review.
+ * A Team.
  */
-@Document(collection = "review")
-public class Review implements Serializable {
+@Document(collection = "team")
+public class Team implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
     @Id
     private String id;
 
-    @Field("timestamp")
-    private Instant timestamp;
-
-    @Field("comment")
-    private String comment;
+    @Field("name")
+    private String name;
 
     @Field("status")
     private String status;
 
     @DBRef
-    @Field("story")
-    @JsonIgnoreProperties("reviews")
-    private Story story;
-
+    @Field("student")
+    private Set<Student> students = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
         return id;
@@ -45,37 +41,24 @@ public class Review implements Serializable {
         this.id = id;
     }
 
-    public Instant getTimestamp() {
-        return timestamp;
+    public String getName() {
+        return name;
     }
 
-    public Review timestamp(Instant timestamp) {
-        this.timestamp = timestamp;
+    public Team name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setTimestamp(Instant timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public Review comment(String comment) {
-        this.comment = comment;
-        return this;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public Review status(String status) {
+    public Team status(String status) {
         this.status = status;
         return this;
     }
@@ -84,17 +67,29 @@ public class Review implements Serializable {
         this.status = status;
     }
 
-    public Story getStory() {
-        return story;
+    public Set<Student> getStudents() {
+        return students;
     }
 
-    public Review story(Story story) {
-        this.story = story;
+    public Team students(Set<Student> students) {
+        this.students = students;
         return this;
     }
 
-    public void setStory(Story story) {
-        this.story = story;
+    public Team addStudent(Student student) {
+        this.students.add(student);
+        student.setTeam(this);
+        return this;
+    }
+
+    public Team removeStudent(Student student) {
+        this.students.remove(student);
+        student.setTeam(null);
+        return this;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -106,11 +101,11 @@ public class Review implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Review review = (Review) o;
-        if (review.getId() == null || getId() == null) {
+        Team team = (Team) o;
+        if (team.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), review.getId());
+        return Objects.equals(getId(), team.getId());
     }
 
     @Override
@@ -120,10 +115,9 @@ public class Review implements Serializable {
 
     @Override
     public String toString() {
-        return "Review{" +
+        return "Team{" +
             "id=" + getId() +
-            ", timestamp='" + getTimestamp() + "'" +
-            ", comment='" + getComment() + "'" +
+            ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             "}";
     }

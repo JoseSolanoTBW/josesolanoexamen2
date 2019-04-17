@@ -3,21 +3,15 @@
     "clientRootFolder": "",
     "relationships": [
         {
-            "relationshipName": "story",
-            "otherEntityName": "story",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "name",
-            "otherEntityRelationshipName": "review",
-            "otherEntityRelationshipNameUndefined": true
+            "relationshipName": "student",
+            "otherEntityName": "student",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "team"
         }
     ],
     "fields": [
         {
-            "fieldName": "timestamp",
-            "fieldType": "Instant"
-        },
-        {
-            "fieldName": "comment",
+            "fieldName": "name",
             "fieldType": "String"
         },
         {
@@ -28,7 +22,7 @@
     "dto": "no",
     "searchEngine": false,
     "service": "serviceClass",
-    "entityTableName": "review",
+    "entityTableName": "team",
     "databaseType": "mongodb",
     "jpaMetamodelFiltering": false,
     "pagination": "no"

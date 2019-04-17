@@ -8,6 +8,8 @@ import { IStudent } from 'app/shared/model/student.model';
 import { StudentService } from './student.service';
 import { IStory } from 'app/shared/model/story.model';
 import { StoryService } from 'app/entities/story';
+import { ITeam } from 'app/shared/model/team.model';
+import { TeamService } from 'app/entities/team';
 
 @Component({
     selector: 'jhi-student-update',
@@ -19,10 +21,13 @@ export class StudentUpdateComponent implements OnInit {
 
     stories: IStory[];
 
+    teams: ITeam[];
+
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected studentService: StudentService,
         protected storyService: StoryService,
+        protected teamService: TeamService,
         protected activatedRoute: ActivatedRoute
     ) {}
 
@@ -38,6 +43,13 @@ export class StudentUpdateComponent implements OnInit {
                 map((response: HttpResponse<IStory[]>) => response.body)
             )
             .subscribe((res: IStory[]) => (this.stories = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.teamService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<ITeam[]>) => mayBeOk.ok),
+                map((response: HttpResponse<ITeam[]>) => response.body)
+            )
+            .subscribe((res: ITeam[]) => (this.teams = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -71,6 +83,10 @@ export class StudentUpdateComponent implements OnInit {
     }
 
     trackStoryById(index: number, item: IStory) {
+        return item.id;
+    }
+
+    trackTeamById(index: number, item: ITeam) {
         return item.id;
     }
 

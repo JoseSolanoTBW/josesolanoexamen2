@@ -1,27 +1,17 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <div *ngIf="review">
-            <h2><span>Review</span> {{review.id}}</h2>
+        <div *ngIf="team">
+            <h2><span>Team</span> {{team.id}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span>Timestamp</span></dt>
+                <dt><span>Name</span></dt>
                 <dd>
-                    <span>{{review.timestamp}}</span>
-                </dd>
-                <dt><span>Comment</span></dt>
-                <dd>
-                    <span>{{review.comment}}</span>
+                    <span>{{team.name}}</span>
                 </dd>
                 <dt><span>Status</span></dt>
                 <dd>
-                    <span>{{review.status}}</span>
-                </dd>
-                <dt><span>Story</span></dt>
-                <dd>
-                    <div *ngIf="review.story">
-                        <a [routerLink]="['/story', review.story?.id, 'view']">{{review.story?.name}}</a>
-                    </div>
+                    <span>{{team.status}}</span>
                 </dd>
             </dl>
 
@@ -32,7 +22,7 @@
             </button>
 
             <button type="button"
-                    [routerLink]="['/review', review.id, 'edit']"
+                    [routerLink]="['/team', team.id, 'edit']"
                     class="btn btn-primary">
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
             </button>

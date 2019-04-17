@@ -27,6 +27,12 @@
                         <a [routerLink]="['/story', userStory?.id, 'view' ]">{{userStory.code}}</a>{{last ? '' : ', '}}
                     </span>
                 </dd>
+                <dt><span>Team</span></dt>
+                <dd>
+                    <div *ngIf="student.team">
+                        <a [routerLink]="['/team', student.team?.id, 'view']">{{student.team?.name}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

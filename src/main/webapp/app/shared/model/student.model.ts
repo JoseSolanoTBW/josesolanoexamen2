@@ -1,4 +1,5 @@
 import { IStory } from 'app/shared/model/story.model';
+import { ITeam } from 'app/shared/model/team.model';
 
 export interface IStudent {
     id?: string;
@@ -7,6 +8,7 @@ export interface IStudent {
     role?: string;
     status?: string;
     userStories?: IStory[];
+    team?: ITeam;
 }
 
 export class Student implements IStudent {
@@ -16,6 +18,7 @@ export class Student implements IStudent {
         public lastName?: string,
         public role?: string,
         public status?: string,
-        public userStories?: IStory[]
+        public userStories?: IStory[],
+        public team?: ITeam
     ) {}
 }
