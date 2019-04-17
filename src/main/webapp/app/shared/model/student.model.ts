@@ -1,0 +1,21 @@
+import { IStory } from 'app/shared/model/story.model';
+
+export interface IStudent {
+    id?: string;
+    name?: string;
+    lastName?: string;
+    role?: string;
+    status?: string;
+    userStories?: IStory[];
+}
+
+export class Student implements IStudent {
+    constructor(
+        public id?: string,
+        public name?: string,
+        public lastName?: string,
+        public role?: string,
+        public status?: string,
+        public userStories?: IStory[]
+    ) {}
+}

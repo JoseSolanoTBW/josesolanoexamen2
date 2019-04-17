@@ -38,6 +38,11 @@ public class Story implements Serializable {
     @DBRef
     @Field("review")
     private Set<Review> reviews = new HashSet<>();
+
+    @DBRef
+    @Field("student")
+    private Set<Student> students =  new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
         return id;
@@ -138,6 +143,14 @@ public class Story implements Serializable {
             return false;
         }
         return Objects.equals(getId(), story.getId());
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 
     @Override
