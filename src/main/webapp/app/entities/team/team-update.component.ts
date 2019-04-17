@@ -3,8 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { JhiAlertService } from 'ng-jhipster';
 import { ITeam } from 'app/shared/model/team.model';
 import { TeamService } from './team.service';
+import { IProject } from 'app/shared/model/project.model';
+import { ProjectService } from 'app/entities/project';
 
 @Component({
     selector: 'jhi-team-update',
@@ -14,13 +17,27 @@ export class TeamUpdateComponent implements OnInit {
     team: ITeam;
     isSaving: boolean;
 
-    constructor(protected teamService: TeamService, protected activatedRoute: ActivatedRoute) {}
+    projects: IProject[];
+
+    constructor(
+        protected jhiAlertService: JhiAlertService,
+        protected teamService: TeamService,
+        protected projectService: ProjectService,
+        protected activatedRoute: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ team }) => {
             this.team = team;
         });
+        this.projectService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IProject[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IProject[]>) => response.body)
+            )
+            .subscribe((res: IProject[]) => (this.projects = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -47,5 +64,13 @@ export class TeamUpdateComponent implements OnInit {
 
     protected onSaveError() {
         this.isSaving = false;
+    }
+
+    protected onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    trackProjectById(index: number, item: IProject) {
+        return item.id;
     }
 }

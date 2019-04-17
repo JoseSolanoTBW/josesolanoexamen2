@@ -6,7 +6,16 @@
             "relationshipName": "student",
             "otherEntityName": "student",
             "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "team"
+            "otherEntityRelationshipName": "team",
+            "otherEntityRelationshipNameUndefined": false
+        },
+        {
+            "relationshipName": "project",
+            "otherEntityName": "project",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "team",
+            "otherEntityRelationshipNameUndefined": true
         }
     ],
     "fields": [

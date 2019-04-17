@@ -1,32 +1,35 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-team-heading">Create or edit a Team</h2>
+            <h2 id="jhi-project-heading">Create or edit a Project</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!team.id">
+                <div class="form-group" [hidden]="!project.id">
                     <label for="id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="team.id" readonly />
+                        [(ngModel)]="project.id" readonly />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
-                        [(ngModel)]="team.name" />
+                        [(ngModel)]="project.name" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_numStudent">Num Student</label>
+                    <input type="number" class="form-control" name="numStudent" id="field_numStudent"
+                        [(ngModel)]="project.numStudent" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_schedule">Schedule</label>
+                    <input type="text" class="form-control" name="schedule" id="field_schedule"
+                        [(ngModel)]="project.schedule" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_status">Status</label>
                     <input type="text" class="form-control" name="status" id="field_status"
-                        [(ngModel)]="team.status" />
+                        [(ngModel)]="project.status" />
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_project">Project</label>
-                    <select class="form-control" id="field_project" name="project" [(ngModel)]="team.project" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="projectOption.id === team.project?.id ? team.project : projectOption" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.name}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
